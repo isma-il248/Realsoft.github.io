@@ -3,77 +3,991 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basit Taslak Site</title>
+    <title>RealSoft - Telegram Otomasyon Aracı</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        :root {
+            --primary: #0088cc; /* Telegram blue */
+            --primary-dark: #006699;
+            --secondary: #00BFFF; /* Light blue */
+            --accent: #34B7F1; /* Telegram secondary blue */
+            --dark: #212121;
+            --light: #F5F5F5;
+            --gray: #757575;
+            --success: #4CAF50;
+            --warning: #FFC107;
+            --danger: #FF5252;
+            --white: #FFFFFF;
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header styles */
         header {
-            background-color: #333;
-            color: white;
-            padding: 15px;
-            text-align: center;
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-        nav {
-            background-color: #444;
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 32px;
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--light);
+        }
+
+        /* Hero section */
+        .hero {
+            padding: 180px 0 100px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            position: relative;
             overflow: hidden;
         }
-        nav a {
-            color: white;
-            padding: 14px 20px;
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 20px;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--white);
+            color: var(--primary);
             text-decoration: none;
-            float: left;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-        nav a:hover {
-            background-color: #ddd;
-            color: black;
+
+        .btn-primary {
+            background-color: var(--white);
+            color: var(--primary);
         }
-        .container {
-            padding: 20px;
+
+        .btn-primary:hover {
+            background-color: transparent;
+            border-color: var(--white);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
         }
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
+
+        .btn-cta {
+            font-size: 18px;
+            padding: 15px 40px;
+            font-weight: 700;
+            animation: pulse 2s infinite;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        /* Features section */
+        .features {
+            padding: 100px 0;
+            background-color: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title p {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background-color: var(--light);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 50px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+        }
+
+        .feature-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .feature-description {
+            color: var(--gray);
+        }
+
+        /* Pricing section */
+        .pricing {
+            padding: 100px 0;
+            background-color: var(--light);
+        }
+
+        .pricing-cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .pricing-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 40px 30px;
+            max-width: 350px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing-header {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .pricing-title {
+            font-size: 24px;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .pricing-price {
+            font-size: 40px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .pricing-period {
+            color: var(--gray);
+            font-size: 16px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            margin-bottom: 10px;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+        }
+
+        .pricing-features li i {
+            color: var(--success);
+            margin-right: 10px;
+        }
+
+        .pricing-popular {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: var(--warning);
+            color: var(--dark);
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 15px;
+            transform: rotate(45deg) translateX(25%) translateY(-65%);
+            width: 150px;
+        }
+
+        /* FAQ section */
+        .faq {
+            padding: 100px 0;
+            background-color: var(--white);
+        }
+
+        .accordion {
+            max-width: 800px;
+            margin: 40px auto 0;
+        }
+
+        .accordion-item {
+            background-color: var(--light);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .accordion-header {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background-color: rgba(0, 136, 204, 0.05);
+        }
+
+        .accordion-header i {
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 20px;
+        }
+
+        .accordion-content-inner {
+            padding-bottom: 20px;
+            color: var(--gray);
+        }
+
+        .active .accordion-header {
+            background-color: rgba(0, 136, 204, 0.1);
+        }
+
+        .active .accordion-header i {
+            transform: rotate(180deg);
+        }
+
+        .active .accordion-content {
+            max-height: 200px;
+        }
+
+        /* Call to action */
+        .cta {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--white);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-logo i {
+            margin-right: 10px;
+            font-size: 28px;
+            color: var(--primary);
+        }
+
+        .footer-links h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--white);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links ul li a:hover {
+            color: var(--primary);
+        }
+
+        .footer-social a {
+            color: var(--gray);
+            font-size: 20px;
+            margin-right: 15px;
+            transition: color 0.3s;
+        }
+
+        .footer-social a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            text-align: center;
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(255, 255, 255, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+
+        /* Responsive styles */
+        @media screen and (max-width: 992px) {
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .footer-content {
+                gap: 30px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .nav-toggle {
+                display: block;
+            }
+
+            nav {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary);
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s ease;
+            }
+
+            nav.active {
+                max-height: 300px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            nav ul li {
+                margin: 0 0 15px 0;
+            }
+
+            .hero {
+                padding: 150px 0 80px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .pricing-card {
+                max-width: 100%;
+            }
+
+            .footer-content {
+                flex-direction: column;
+            }
+
+            .footer-column {
+                width: 100%;
+                margin-bottom: 30px;
+            }
+        }
+
+        @media screen and (max-width: 576px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .section-title h2 {
+                font-size: 28px;
+            }
+
+            .btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .btn-cta {
+                padding: 12px 30px;
+                font-size: 16px;
+            }
+        }
+
+        /* Floating button */
+        .float-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: var(--white);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 999;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease;
+        }
+
+        .float-btn:hover {
+            background-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
 <body>
-
     <header>
-        <h1>Hoşgeldiniz</h1>
-        <p>Basit bir HTML Taslak Site</p>
+        <div class="container header-content">
+            <a href="#" class="logo">
+                <i class="fab fa-telegram"></i> RealSoft
+            </a>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="navMenu">
+                <ul>
+                    <li><a href="#features">Özellikler</a></li>
+                    <li><a href="#pricing">Fiyatlar</a></li>
+                    <li><a href="#faq">S.S.S</a></li>
+                    <li><a href="#contact">İletişim</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <nav>
-        <a href="#">Anasayfa</a>
-        <a href="#">Hakkımızda</a>
-        <a href="#">Hizmetler</a>
-        <a href="#">İletişim</a>
-    </nav>
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container hero-content">
+            <h1>Telegram Otomasyonunu Yeniden Keşfedin</h1>
+            <p>RealSoft ile Telegram hesaplarınızı profesyonel şekilde yönetin, otomatikleştirin ve pazarlama stratejilerinizi maksimum verimle uygulayın.</p>
+            <a href="https://t.me/realsoft_bot" class="btn btn-primary btn-cta">
+                <i class="fab fa-telegram"></i> Telegram'da İletişime Geç
+            </a>
+        </div>
+    </section>
 
-    <div class="container">
-        <h2>Hakkında</h2>
-        <p>Bu basit bir HTML site taslağıdır. Burada temel bir yapı ve stil eklenmiştir.</p>
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Güçlü Özellikler</h2>
+                <p>RealSoft, Telegram hesaplarınızı yönetmek için ihtiyacınız olan tüm araçları tek bir platformda sunuyor.</p>
+            </div>
 
-        <h3>Hizmetlerimiz</h3>
-        <ul>
-            <li>Web Geliştirme</li>
-            <li>Mobil Uygulama Geliştirme</li>
-            <li>Danışmanlık Hizmetleri</li>
-        </ul>
-    </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-lock"></i>
+                    </div>
+                    <h3 class="feature-title">Hesap Yönetimi</h3>
+                    <p class="feature-description">Hesaplarınıza güvenli giriş yapın, ban filtreleme ve spam kontrol sistemleriyle hesaplarınızı koruyun.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h3 class="feature-title">Profil Düzenleme</h3>
+                    <p class="feature-description">İsim, soyisim, biyografi ve profil resimlerini kolayca değiştirin veya rastgele gerçekçi profiller oluşturun.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="feature-title">Grup Yönetimi</h3>
+                    <p class="feature-description">Gruplara katılın, gruplardan ayrılın veya toplu işlemlerle tüm gruplardan tek seferde çıkış yapın.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h3 class="feature-title">Üye Ekleme</h3>
+                    <p class="feature-description">Normal, aktif ve de-aktif üye ekleme modlarıyla gruplarınızı hızla büyütün.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3 class="feature-title">Veritabanı Yönetimi</h3>
+                    <p class="feature-description">Grupları ve kullanıcıları otomatik olarak toplayın, organize edin ve pazarlama kampanyalarınız için kullanın.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comment-dots"></i>
+                    </div>
+                    <h3 class="feature-title">Oto-DM Sistemi</h3>
+                    <p class="feature-description">Otomatik mesaj gönderme sistemleriyle hedef kitlenizle etkileşime geçin ve dönüşüm oranlarınızı artırın.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Basit ve Şeffaf Fiyatlandırma</h2>
+                <p>İhtiyaçlarınıza uygun fiyat planı ile RealSoft'un tüm özelliklerinden yararlanın.</p>
+            </div>
+
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">Haftalık Plan</h3>
+                        <div class="pricing-price">250₺</div>
+                        <div class="pricing-period">/ hafta</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Tüm temel özellikler</li>
+                        <li><i class="fas fa-check"></i> Hesap yönetimi</li>
+                        <li><i class="fas fa-check"></i> Profil düzenleme</li>
+                        <li><i class="fas fa-check"></i> Grup yönetimi</li>
+                        <li><i class="fas fa-check"></i> 7/24 Teknik destek</li>
+                    </ul>
+                    <a href="https://t.me/realsoft_bot" class="btn btn-primary">Hemen Başla</a>
+                </div>
+
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">Aylık Plan</h3>
+                        <div class="pricing-price">800₺</div>
+                        <div class="pricing-period">/ ay</div>
+                        <div class="pricing-popular">En Popüler</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Tüm özellikler</li>
+                        <li><i class="fas fa-check"></i> Sınırsız hesap yönetimi</li>
+                        <li><i class="fas fa-check"></i> Gelişmiş veritabanı özellikleri</li>
+                        <li><i class="fas fa-check"></i> Üye ekleme sistemleri</li>
+                        <li><i class="fas fa-check"></i> Oto-DM özellikleri</li>
+                        <li><i class="fas fa-check"></i> Öncelikli 7/24 teknik destek</li>
+                    </ul>
+                    <a href="https://t.me/realsoft_bot" class="btn btn-primary">Hemen Başla</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="section-title">
+                <h2>Sıkça Sorulan Sorular</h2>
+                <p>RealSoft hakkında merak ettiğiniz soruların cevaplarını bulun.</p>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        RealSoft'u kullanmak için ne gerekiyor?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            RealSoft'u kullanmak için sadece Telegram hesabınızın olması yeterlidir. Uygulamamız hem Windows hem de MacOS işletim sistemlerinde çalışabilir.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        RealSoft hesabımın güvenliğini sağlıyor mu?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            Evet, RealSoft'un ban filtre özellikleri ve spam kontrolü sayesinde hesaplarınız güvende kalır. Ayrıca 2FA desteği ile hesaplarınızı daha da güvenli hale getirebilirsiniz.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        Ödeme yöntemleri nelerdir?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            Şu anda banka havalesi, kredi kartı ve kripto para ile ödeme seçeneklerimiz bulunmaktadır. Ödeme detayları için Telegram üzerinden bizimle iletişime geçebilirsiniz.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        Teknik destek sağlıyor musunuz?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            Evet, tüm müşterilerimize 7/24 teknik destek sağlıyoruz. Aylık plan müşterilerimiz öncelikli destek hizmetimizden yararlanabilirler.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta" id="contact">
+        <div class="container cta-content">
+            <h2>Hemen Başlayın!</h2>
+            <p>RealSoft ile Telegram hesaplarınızın potansiyelini maksimuma çıkarın ve pazarlama stratejilerinizi otomatikleştirin.</p>
+            <div class="cta-buttons">
+                <a href="https://t.me/realsoft_bot" class="btn btn-primary btn-cta">
+                    <i class="fab fa-telegram"></i> Telegram'da İletişime Geç
+                </a>
+            </div>
+        </div>
+    </section>
 
     <footer>
-        <p>&copy; 2025 Sedat Kürt. Tüm Hakları Saklıdır.</p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <i class="fab fa-telegram"></i> RealSoft
+                    </div>
+                    <p>Telegram için profesyonel otomasyon çözümleri sunuyoruz.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column footer-links">
+                    <h3>Ürün</h3>
+                    <ul>
+                        <li><a href="#features">Özellikler</a></li>
+                        <li><a href="#pricing">Fiyatlandırma</a></li>
+                        <li><a href="#faq">S.S.S</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column footer-links">
+                    <h3>Şirket</h3>
+                    <ul>
+                        <li><a href="#">Hakkımızda</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Kariyer</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column footer-links">
+                    <h3>Destek</h3>
+                    <ul>
+                        <li><a href="#">Yardım Merkezi</a></li>
+                        <li><a href="#">İletişim</a></li>
+                        <li><a href="#">Gizlilik Politikası</a></li>
+                        <li><a href="#">Kullanım Koşulları</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2023 RealSoft. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
     </footer>
 
+    <a href="https://t.me/realsoft_bot" class="float-btn">
+        <i class="fab fa-telegram"></i>
+    </a>
+
+    <script>
+        // Mobile Navigation
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                navMenu.classList.remove('active');
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // FAQ Accordion
+        const accordionItems = document.querySelectorAll('.accordion-item');
+
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            header.addEventListener('click', () => {
+                const activeItem = document.querySelector('.accordion-item.active');
+                
+                if (activeItem && activeItem !== item) {
+                    activeItem.classList.remove('active');
+                }
+                
+                item.classList.toggle('active');
+            });
+        });
+
+        // Animation on scroll
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.feature-card, .pricing-card, .section-title, .cta-content');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.2;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = 1;
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+
+        // Initialize animations
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.feature-card, .pricing-card, .section-title, .cta-content').forEach(element => {
+                element.style.opacity = 0;
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'all 0.6s ease';
+            });
+            
+            animateOnScroll();
+        });
+
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
 </body>
 </html>
