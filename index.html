@@ -305,11 +305,50 @@
             font-weight: 700;
             color: var(--primary);
             margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .original-price {
+            font-size: 24px;
+            color: var(--gray);
+            text-decoration: line-through;
+            position: absolute;
+            top: -20px;
+            right: -40px;
         }
 
         .pricing-period {
             color: var(--gray);
             font-size: 16px;
+        }
+        
+        .discount-badge {
+            position: absolute;
+            top: 15px;
+            left: -15px;
+            background-color: var(--danger);
+            color: var(--white);
+            padding: 5px 15px;
+            font-size: 14px;
+            font-weight: 700;
+            transform: rotate(-45deg);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 2;
+        }
+        
+        .limited-offer {
+            font-size: 14px;
+            color: var(--danger);
+            font-weight: 600;
+            margin-top: 5px;
+            animation: blink 1.5s infinite;
+        }
+        
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
         }
 
         .pricing-features {
@@ -404,6 +443,59 @@
 
         .active .accordion-content {
             max-height: 200px;
+        }
+        
+        /* Terminal quote box */
+        .terminal-quote {
+            background-color: var(--dark);
+            color: var(--light);
+            border-radius: 8px;
+            padding: 25px;
+            margin: 50px auto;
+            max-width: 800px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-left: 5px solid var(--primary);
+            font-family: 'Courier New', monospace;
+        }
+        
+        .terminal-header {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background-color: var(--primary);
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .terminal-content {
+            margin-top: 15px;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+        
+        .terminal-content .highlight {
+            color: var(--accent);
+            font-weight: 700;
+        }
+        
+        .terminal-content .update-note {
+            color: var(--success);
+            margin-top: 15px;
+            font-style: italic;
+        }
+        
+        .blinking-cursor {
+            animation: blink 1s step-end infinite;
+            margin-left: 5px;
+        }
+        
+        @keyframes blink {
+            from, to { color: transparent; }
+            50% { color: var(--light); }
         }
 
         /* Call to action */
@@ -750,6 +842,17 @@
                     <p class="feature-description">Otomatik mesaj gönderme sistemleriyle hedef kitlenizle etkileşime geçin ve dönüşüm oranlarınızı artırın.</p>
                 </div>
             </div>
+            
+            <div class="terminal-quote">
+                <div class="terminal-header">$ RealSoft Terminal</div>
+                <div class="terminal-content">
+                    <p>"<span class="highlight">Güç arayüzde değil, fonksiyondadır.</span> RealSoft, karmaşık grafiksel arayüzler yerine 
+                    terminal tabanlı güçlü bir altyapı sunar. Çünkü gerçek verimlilik gösterişten değil, 
+                    etkili çalışmadan gelir."</p>
+                    <p class="update-note">Sistem güncellemesi algılandı: RealSoft v2.3.1 otomatik olarak güncellendi. 
+                    Tüm özellikler aktif. Yeni: Ban filtreleme algoritması iyileştirildi.<span class="blinking-cursor">|</span></p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -762,10 +865,12 @@
 
             <div class="pricing-cards">
                 <div class="pricing-card">
+                    <div class="discount-badge">%30 İndirim</div>
                     <div class="pricing-header">
                         <h3 class="pricing-title">Haftalık Plan</h3>
-                        <div class="pricing-price">250₺</div>
+                        <div class="pricing-price"><span class="original-price">350₺</span>250₺</div>
                         <div class="pricing-period">/ hafta</div>
+                        <div class="limited-offer">Sınırlı süre teklifi!</div>
                     </div>
                     <ul class="pricing-features">
                         <li><i class="fas fa-check"></i> Tüm temel özellikler</li>
@@ -778,11 +883,13 @@
                 </div>
 
                 <div class="pricing-card">
+                    <div class="discount-badge">%35 İndirim</div>
                     <div class="pricing-header">
                         <h3 class="pricing-title">Aylık Plan</h3>
-                        <div class="pricing-price">800₺</div>
+                        <div class="pricing-price"><span class="original-price">1200₺</span>800₺</div>
                         <div class="pricing-period">/ ay</div>
                         <div class="pricing-popular">En Popüler</div>
+                        <div class="limited-offer">Sınırlı süre teklifi!</div>
                     </div>
                     <ul class="pricing-features">
                         <li><i class="fas fa-check"></i> Tüm özellikler</li>
